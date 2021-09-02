@@ -66,7 +66,7 @@ class MainActivity : ComponentActivity() {
                 pagerState = rememberPagerState(
                     pageCount = 2,
                     // We increase the offscreen limit, to allow pre-loading of images
-                    initialOffscreenLimit = 2,
+                    initialOffscreenLimit = 1,
                 )
                 viewmodel.currentPage.observe(this, {
                     Timber.wtf("clicked $it")

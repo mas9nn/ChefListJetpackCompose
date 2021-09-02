@@ -12,6 +12,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -57,6 +58,8 @@ fun MainScreen(
     pagerState: PagerState,
     viewModel: MainActivityViewModel = hiltViewModel()
 ) {
+
+
     pageController = pagerState
     HorizontalPager(state = pagerState, dragEnabled = false) { page ->
         when (page) {
@@ -73,6 +76,12 @@ fun MainScreen(
 fun content(navController: NavController, viewModel: MainActivityViewModel = hiltViewModel()) {
     val state = rememberCollapsingToolbarScaffoldState(CollapsingToolbarState())
     val swipeRefreshState = rememberSwipeRefreshState(false)
+
+    DisposableEffect(key1 = viewModel) {
+        viewModel.onStart()
+        onDispose { viewModel.onStop() }
+    }
+
 
     SwipeRefresh(state = swipeRefreshState, onRefresh = { /*TODO*/ }) {
         CollapsingToolbarScaffold(
